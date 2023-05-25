@@ -4,10 +4,7 @@ import com.lax.sms.entity.Student;
 import com.lax.sms.service.StudentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class StudentController {
@@ -47,7 +44,6 @@ public class StudentController {
         model.addAttribute("student", studentService.getStudentById(id));
         //return view
         return "edit_student";
-
     }
 
     @PostMapping("/students/{id}")
@@ -64,6 +60,13 @@ public class StudentController {
 
         //save updated Student object
         studentService.updateStudent(existingStudent);
+        return "redirect:/students";
+    }
+
+    //Handler Method to handle delete student request
+    @GetMapping("/students/{id}")
+    public String deleteStudent(@PathVariable Long id){
+        studentService.deleteStudentById(id);
         return "redirect:/students";
 
     }
